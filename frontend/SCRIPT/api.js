@@ -1,7 +1,4 @@
-/**
- * Cliente API do MIK
- * Configura a URL do backend no ficheiro config.js
- */
+const API_URL = 'https://mik-backend-pqcb.onrender.com';
 const API = {
   get base() {
     return (window.MIK_API_URL || 'http://127.0.0.1:8000').replace(/\/$/, '');

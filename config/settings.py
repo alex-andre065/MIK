@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-6&p2h8sn8lsua59zcyg+3xjq4cbr6$s0fwi9$b&3^@)@=ahsp)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["https://mik-backend-pqcb.onrender.com"]
 
 AUTH_USER_MODEL = 'api.Membro'
 
@@ -168,5 +168,5 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
-CORS_ALLOW_ALL_ORIGINS = True  # Em produção, restringe ao domínio do frontend
+CORS_ALLOW_ALL_ORIGINS = ["https://mik-f0eu.onrender.com",]
 CORS_ALLOW_CREDENTIALS = True
