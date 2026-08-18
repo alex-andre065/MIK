@@ -1,0 +1,136 @@
+.conteudo-eventos{
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.conteudo-eventos h1{
+    color: #222;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.conteudo-eventos h2{
+    font-size: 22px;
+    color: #333;
+    margin: 40px 0 20px 0;
+}
+
+.evento-destaque{
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    border-left: 4px solid #007bff;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.destaque-tag{
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: #007bff;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.evento-destaque h2{
+    font-size: 26px;
+    color: #222;
+    margin: 0 0 5px 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.evento-destaque h3{
+    font-size: 16px;
+    color: #007bff;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.evento-destaque p{
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.destaque-info{
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #444;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    flex-wrap: wrap;
+}
+
+.eventos-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.evento-card{
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    overflow: hidden;
+    border-top: 3px solid #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.evento-corpo{
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.evento-card h3{
+    font-size: 18px;
+    color: #222;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.evento-data{
+    font-size: 13px;
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.evento-card p{
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px){
+    .conteudo-eventos{
+        margin: 20px 10px;
+        padding: 0;
+    }
+    .destaque-tag{
+        position: static;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+    .evento-destaque{
+        padding: 20px;
+    }
+    .destaque-info{
+        flex-direction: column;
+        gap: 8px;
+    }
+}

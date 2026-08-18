@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+    --fonte-titulo: 'Manrope', 'Segoe UI', Arial, sans-serif;
+    --fonte-corpo: 'Inter', 'Segoe UI', Arial, sans-serif;
+    --raio-cartao: 18px;
+    --raio-botao: 12px;
+    --sombra-suave: 0 2px 14px rgba(20, 30, 60, 0.06);
+    --sombra-media: 0 10px 30px rgba(20, 30, 60, 0.10);
+    --azul: #007bff;
+    --azul-forte: #0056b3;
+    --gradiente-azul: linear-gradient(135deg, #0062cc 0%, #1f9bff 100%);
+}
+
+body{
+    font-family: var(--fonte-corpo);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5,
+.logo .info h5,
+.conteudo-admin h1,
+.hero-texto h1,
+.hero-tag,
+.boas-vindas,
+.admin-card h3,
+.evento-card h3,
+.cards h3,
+.pilar-card h3{
+    font-family: var(--fonte-titulo);
+    letter-spacing: -0.01em;
+}
+
+::selection{ background: var(--azul); color: #fff; }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.config-linha:focus-visible,
+.sidebar-links a:focus-visible{
+    outline: 2px solid var(--azul);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar{ width: 10px; height: 10px; }
+::-webkit-scrollbar-track{ background: transparent; }
+::-webkit-scrollbar-thumb{
+    background: rgba(0, 123, 255, 0.35);
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover{ background: rgba(0, 123, 255, 0.55); background-clip: content-box; }
+
+.cards,
+.admin-card,
+.evento-card,
+.galeria-card,
+.pilar-card,
+.tabela-box,
+.aviso-tabela,
+.contacto-form-box,
+.contacto-info-box,
+.msg-card,
+.lista-config,
+.perfil-cartao,
+.destaque-info{
+    border-radius: var(--raio-cartao) !important;
+    box-shadow: var(--sombra-suave) !important;
+}
+
+.admin-card:hover,
+.evento-card:hover,
+.galeria-card:hover,
+.cards:hover{
+    box-shadow: var(--sombra-media) !important;
+}
+
+button,
+.btn-hero,
+.btn-hero-primario,
+.btn-hero-secundario,
+.btn-acao,
+.btn-voltar,
+.btn-marcar-lido,
+.btn-download-img,
+.link-admin,
+.voltar,
+input[type="submit"]{
+    border-radius: var(--raio-botao) !important;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease !important;
+}
+
+button:hover:not(:disabled),
+.btn-hero:hover,
+.btn-hero-primario:hover,
+.btn-acao:hover:not(:disabled),
+input[type="submit"]:hover{
+    transform: translateY(-1px);
+}
+
+button:active:not(:disabled),
+.btn-hero:active,
+.btn-acao:active{
+    transform: translateY(0);
+}
+
+.menu-btn:hover:not(:disabled){
+    transform: none !important;
+}
+
+.btn-hero-primario,
+.btn-confirmar,
+button[type="submit"]:not(.btn-cancelar){
+    background: var(--gradiente-azul) !important;
+    border: none !important;
+}
+
+input:not([type="checkbox"]):not([type="radio"]),
+textarea,
+select{
+    border-radius: 10px !important;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):focus,
+textarea:focus,
+select:focus{
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15) !important;
+}
+
+header{
+    -webkit-backdrop-filter: saturate(180%) blur(8px);
+    backdrop-filter: saturate(180%) blur(8px);
+}
+
+.sidebar{
+    background-image: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+}
+
+.hero-tag{
+    letter-spacing: 0.04em;
+}
+
+table{ border-radius: var(--raio-cartao); overflow: hidden; }
+
+.modal-box{
+    border-radius: 20px !important;
+    box-shadow: var(--sombra-media) !important;
+}
+
+@media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}

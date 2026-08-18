@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <script src="SCRIPT/tema.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/admin.css">
+    <link rel="stylesheet" href="CSS/tema.css">
+    <title>Painel Administrativo - MIK</title>
+</head>
+<body>
+<header id="mik-header"></header>
+<div id="sidebar-overlay" onclick="fecharSidebar()"></div>
+<aside class="sidebar" id="sidebar"><div id="mik-sidebar"></div></aside>
+
+<main class="conteudo-admin">
+    <h1>Painel de Controle do Administrador</h1>
+    <p class="boas-vindas">Olá, <span id="admin-nome"></span>. Escolha uma das ações abaixo para gerir o site oficial da MIK:</p>
+
+    <a id="alerta-admin" href="alertas.html" class="admin-alerta" hidden>
+        <span>🚨</span><span class="alerta-count"></span>
+    </a>
+
+    <div class="admin-grid">
+        <a href="gerir-eventos.html" class="admin-card"><div class="card-icon">📅</div><h3>Gerir Eventos</h3><p>Adicione novas atividades ou elimine eventos antigos da página de Eventos.</p></a>
+        <a href="mensagens.html" class="admin-card"><div class="card-icon">✉️</div><h3>Mensagens de Contacto</h3><p>Visualize todas as mensagens e dúvidas enviadas pelos utilizadores através do formulário.</p></a>
+        <a href="gerir-membros.html" class="admin-card"><div class="card-icon">👥</div><h3>Gerir Membros</h3><p>Visualize a lista de contas registadas, números de telefone e controle os acessos.</p></a>
+        <a href="seguranca.html" class="admin-card"><div class="card-icon">🔐</div><h3>Senha de Segurança</h3><p>Crie ou altere a senha usada para confirmar ações administrativas sensíveis.</p></a>
+        <a href="gerir-galeria.html" class="admin-card"><div class="card-icon">🖼️</div><h3>Gerir Galeria</h3><p>Adicione novas imagens institucionais ou remova fotos antigas da galeria.</p></a>
+        <a href="definicoes.html" class="admin-card"><div class="card-icon">⚙️</div><h3>Definições de Conta</h3><p>Altere os seus dados pessoais, foto de perfil e palavra-passe.</p></a>
+        <a href="historico.html" class="admin-card"><div class="card-icon">📋</div><h3>Histórico de Ações</h3><p>Consulte o registo de todas as ações realizadas pelos administradores.</p></a>
+        <a href="alertas.html" class="admin-card"><div class="card-icon">🔔</div><h3>Alertas de Segurança <span id="alerta-badge" hidden></span></h3><p>Veja bloqueios por excesso de tentativas de senha e outros avisos de segurança.</p></a>
+    </div>
+</main>
+
+<footer class="rodape-direitos"><p>&copy; 2026 Missão Internacional Kodesh (MIK). Todos os direitos reservados.</p></footer>
+
+<script src="SCRIPT/config.js"></script>
+<script src="SCRIPT/api.js"></script>
+<script src="SCRIPT/script.js"></script>
+<script src="SCRIPT/layout.js"></script>
+<script>
+(function(){
+    if (!MIK_requireAuth()) return;
+    var u = (window.API && API.user) || JSON.parse(localStorage.getItem('mik_user') || '{}');
+    if (!(u.nivel === 'admin' || u.is_admin)) { location.href = 'index.html'; return; }
+    MIK_renderShell({subtitulo:'Painel Administrativo'});
+    var nome = document.getElementById('admin-nome');
+    if (nome) nome.textContent = u.nome || '';
+    if (!window.API || !API.alertas) return;
+    API.alertas().then(function(a){
+        var n = Array.isArray(a) ? a.filter(function(x){ return !x.lido; }).length : 0;
+        var box = document.getElementById('alerta-admin');
+        var badge = document.getElementById('alerta-badge');
+        if (n > 0) {
+            box.hidden = false;
+            box.style.display = 'flex';
+            box.querySelector('.alerta-count').textContent = n + ' alerta' + (n === 1 ? '' : 's') + ' de segurança por ler — clique para ver detalhes →';
+            badge.hidden = false;
+            badge.textContent = n;
+        }
+    }).catch(function(){});
+})();
+</script>
+<script src="SCRIPT/loader.js"></script>
+</body>
+</html>

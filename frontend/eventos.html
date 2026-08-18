@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <script src="SCRIPT/tema.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/eventos.css">
+    <title>Eventos - MIK</title>
+    <link rel="stylesheet" href="CSS/tema.css">
+    
+</head>
+<body>
+    <header id="mik-header"></header>
+    <div id="sidebar-overlay" onclick="fecharSidebar()"></div>
+    <aside class="sidebar" id="sidebar"><div id="mik-sidebar"></div></aside>
+    <main class="conteudo-eventos">
+        <h1>Eventos e Actividades</h1>
+        <div class="evento-destaque">
+            <div class="destaque-tag">Destaque Principal</div>
+            <h2>KATÁRTISIS</h2>
+            <h3>Encontro de Capacitação e Orientação</h3>
+            <p>O KATÁRTISIS representa um marco importante na nossa caminhada, sendo um dos maiores encontros presenciais realizados pela visão MIK. Trata-se de um momento especial de capacitação espiritual, orientação ministerial, adoração profunda, oração e ensino detalhado da Palavra de Deus, concebido inteiramente para fortalecer e ativar aqueles que foram chamados para servir ao Senhor nesta geração.</p>
+            <div class="destaque-info"><span>📍 Local: Presencial (Consultar canais oficiais)</span><span>📅 Próxima Edição: Brevemente</span></div>
+        </div>
+        <h2>Próximas Actividades</h2>
+        <div class="eventos-grid" id="lista-eventos"></div>
+    </main>
+    <footer class="rodape-direitos"><p>&copy; 2026 Missão Internacional Kodesh (MIK). Todos os direitos reservados.</p></footer>
+    <script src="SCRIPT/config.js"></script>
+    <script src="SCRIPT/api.js"></script>
+    <script src="SCRIPT/script.js"></script>
+    <script src="SCRIPT/layout.js"></script>
+    <script>
+MIK_requireAuth(); MIK_renderShell({pagina:'eventos',subtitulo:'Eventos'});
+function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+API.eventos().then(function(lista){
+ var el=document.getElementById('lista-eventos');
+ if(!lista.length){el.innerHTML='<div class="evento-card"><div class="evento-corpo"><h3>Encontros Globais de Oração</h3><p class="evento-data">📅 Semanalmente</p><p>Momentos intensos de intercessão, clamor e busca pela presença de Deus reunindo participantes de diversas nacionalidades através das nossas plataformas digitais.</p></div></div><div class="evento-card"><div class="evento-corpo"><h3>Programas de Edificação Espiritual</h3><p class="evento-data">📅 Mensalmente</p><p>Transmissões online focadas no ensino bíblico, revelação profética e alinhamento do destino espiritual para jovens apaixonados pelo Evangelho.</p></div></div><div class="evento-card"><div class="evento-corpo"><h3>Capacitação Ministerial Ativa</h3><p class="evento-data">📅 Calendário Periódico</p><p>Aulas e seminários específicos voltados para a preparação teológica, desenvolvimento de dons espirituais e integridade no serviço à obra do Senhor.</p></div></div>';return;}
+ el.innerHTML=lista.map(function(e){return '<div class="evento-card"><div class="evento-corpo"><h3>'+esc(e.titulo)+'</h3><p class="evento-data">📅 '+esc(e.data_atividade)+'</p><p>'+esc(e.descricao||'').replace(/\n/g,'<br>')+'</p></div></div>';}).join('');
+}).catch(function(e){document.getElementById('lista-eventos').innerHTML='<p>Erro ao carregar eventos.</p>';});
+</script>
+    <script src="SCRIPT/loader.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eliminar Conta - MIK</title>
+  <script src="SCRIPT/tema.js"></script>
+  <link rel="stylesheet" href="CSS/style2.css">
+  <link rel="stylesheet" href="CSS/tema.css">
+</head>
+<body>
+  <div class="box">
+    <h2 style="color:#dc3545">Eliminar Conta</h2>
+    <p>Esta ação é permanente. Confirme com a sua palavra-passe.</p>
+    <form id="form">
+      <input type="password" name="senha_confirmacao" placeholder="Palavra-passe ou senha de segurança" required>
+      <button type="submit" style="background:#dc3545">Eliminar Conta</button>
+    </form>
+    <div id="msg" class="msg" style="display:none;margin-top:12px;color:#dc3545;font-weight:bold"></div>
+    <p style="margin-top:16px"><a href="index.html">Cancelar</a></p>
+  </div>
+  <script src="SCRIPT/config.js"></script>
+  <script src="SCRIPT/api.js"></script>
+  <script src="SCRIPT/bloqueio.js"></script>
+  <script>
+    if (!API.token) location.href = 'login.html';
+    document.getElementById('form').onsubmit = async function(e){
+      e.preventDefault();
+      var msg = document.getElementById('msg');
+      try {
+        await API.deleteAccount(new FormData(this).get('senha_confirmacao'));
+        API.clearAuth();
+        location.href = 'login.html';
+      } catch(err) {
+        msg.style.display = 'block';
+        if (err.data && err.data.bloqueio) {
+          msg.id = 'contador-bloqueio';
+          iniciarContadorBloqueio('contador-bloqueio', err.data.bloqueio.restante, err.data.bloqueio.permanente, ['button']);
+        } else {
+          msg.textContent = (err.data && err.data.erro) || err.message;
+        }
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+.conteudo-sobre{
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.conteudo-sobre h1, .conteudo-sobre h2{
+    color: #222;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+.conteudo-sobre h1{
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.conteudo-sobre h2{
+    font-size: 22px;
+    margin: 40px 0 20px 0;
+}
+
+.conteudo-sobre p{
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.imagem-lider{
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    margin: 20px auto;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.pilares-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.pilar-card{
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    border-top: 3px solid #007bff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.pilar-card h3{
+    color: #007bff;
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.pilar-card p{
+    font-size: 14px;
+    line-height: 1.4;
+    color: #666;
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px){
+    .conteudo-sobre{
+        margin: 20px;
+        padding: 15px;
+    }
+    .conteudo-sobre h1{
+        font-size: 24px;
+    }
+    .conteudo-sobre h2{
+        font-size: 20px;
+        margin-top: 30px;
+    }
+    .pilares-container{
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}

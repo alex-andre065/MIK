@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerir Eventos - MIK</title>
+  <script src="SCRIPT/tema.js"></script>
+  <link rel="stylesheet" href="CSS/style.css">
+  <link rel="stylesheet" href="CSS/tema.css">
+  <link rel="stylesheet" href="CSS/gerir_eventos.css">
+  <link rel="stylesheet" href="CSS/moderno.css">
+</head>
+<body>
+  <header id="mik-header"></header>
+  <div id="sidebar-overlay" onclick="fecharSidebar()"></div>
+  <aside class="sidebar" id="sidebar"><div id="mik-sidebar"></div></aside>
+  <main>
+    <div class="container">
+      <a href="admin.html" class="btn-voltar">&larr; Voltar</a>
+      <h1>Gerir Eventos</h1>
+      <form id="form" class="form-box" style="margin-bottom:24px">
+        <input type="text" name="titulo" placeholder="Título" required style="width:100%;padding:10px;margin:6px 0">
+        <input type="text" name="data_atividade" placeholder="Data / horário" style="width:100%;padding:10px;margin:6px 0">
+        <textarea name="descricao" placeholder="Descrição" rows="3" style="width:100%;padding:10px;margin:6px 0"></textarea>
+        <button type="submit">Adicionar Evento</button>
+      </form>
+      <div id="lista"><p>A carregar...</p></div>
+    </div>
+  </main>
+  <script src="SCRIPT/config.js"></script>
+  <script src="SCRIPT/api.js"></script>
+  <script src="SCRIPT/script.js"></script>
+  <script src="SCRIPT/layout.js"></script>
+  <script>
+    MIK_requireAuth(); MIK_renderShell({ subtitulo: 'Gerir Eventos' });
+    function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+    async function load(){
+      var list = await API.adminEventos();
+      var el = document.getElementById('lista');
+      if (!list.length) { el.innerHTML = '<p>Sem eventos.</p>'; return; }
+      el.innerHTML = list.map(function(e){
+        return '<div class="evento-item" style="display:flex;justify-content:space-between;align-items:center;margin:10px 0;padding:12px;background:var(--cartao,#fff);border-radius:10px">'+
+          '<div><strong>'+esc(e.titulo)+'</strong> — '+esc(e.data_atividade)+'</div>'+
+          '<button onclick="del('+e.id+')" style="background:#dc3545;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer">Eliminar</button></div>';
+      }).join('');
+    }
+    window.del = async function(id){ if(!confirm('Eliminar?'))return; await API.eliminarEvento(id); load(); };
+    document.getElementById('form').onsubmit = async function(e){
+      e.preventDefault();
+      var fd = new FormData(this);
+      await API.criarEvento({ titulo: fd.get('titulo'), data_atividade: fd.get('data_atividade'), descricao: fd.get('descricao') });
+      this.reset(); load();
+    };
+    load().catch(function(e){ document.getElementById('lista').textContent = e.message; });
+  </script>
+</body>
+</html>

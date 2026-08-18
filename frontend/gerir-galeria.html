@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerir Galeria - MIK</title>
+  <script src="SCRIPT/tema.js"></script>
+  <link rel="stylesheet" href="CSS/style.css">
+  <link rel="stylesheet" href="CSS/tema.css">
+  <link rel="stylesheet" href="CSS/gerir_galeria.css">
+  <link rel="stylesheet" href="CSS/moderno.css">
+</head>
+<body>
+  <header id="mik-header"></header>
+  <div id="sidebar-overlay" onclick="fecharSidebar()"></div>
+  <aside class="sidebar" id="sidebar"><div id="mik-sidebar"></div></aside>
+  <main>
+    <div class="container">
+      <a href="admin.html" class="btn-voltar">&larr; Voltar</a>
+      <h1>Gerir Galeria</h1>
+      <form id="form" class="form-box" style="margin-bottom:24px">
+        <input type="file" name="imagem" accept="image/*" required>
+        <input type="text" name="legenda" placeholder="Legenda (opcional)" style="width:100%;padding:10px;margin:8px 0">
+        <button type="submit">Adicionar Foto</button>
+      </form>
+      <div class="galeria-grid" id="lista"><p>A carregar...</p></div>
+    </div>
+  </main>
+  <script src="SCRIPT/config.js"></script>
+  <script src="SCRIPT/api.js"></script>
+  <script src="SCRIPT/script.js"></script>
+  <script src="SCRIPT/layout.js"></script>
+  <script>
+    MIK_requireAuth(); MIK_renderShell({ subtitulo: 'Gerir Galeria' });
+    function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+    async function load(){
+      var list = await API.adminGaleria();
+      var el = document.getElementById('lista');
+      if (!list.length) { el.innerHTML = '<p>Sem fotos.</p>'; return; }
+      el.innerHTML = list.map(function(f){
+        return '<div class="galeria-item"><img src="'+(f.imagem_url||'')+'" alt=""><p>'+esc(f.legenda)+'</p>'+
+          '<button onclick="del('+f.id+')" style="background:#dc3545;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer">Eliminar</button></div>';
+      }).join('');
+    }
+    window.del = async function(id){ if(!confirm('Eliminar?'))return; await API.eliminarFoto(id); load(); };
+    document.getElementById('form').onsubmit = async function(e){
+      e.preventDefault();
+      await API.adicionarFoto(new FormData(this));
+      this.reset(); load();
+    };
+    load().catch(function(e){ document.getElementById('lista').textContent = e.message; });
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mensagens - MIK</title>
+  <script src="SCRIPT/tema.js"></script>
+  <link rel="stylesheet" href="CSS/style.css">
+  <link rel="stylesheet" href="CSS/tema.css">
+  <link rel="stylesheet" href="CSS/ver_mensagens.css">
+  <link rel="stylesheet" href="CSS/moderno.css">
+</head>
+<body>
+  <header id="mik-header"></header>
+  <div id="sidebar-overlay" onclick="fecharSidebar()"></div>
+  <aside class="sidebar" id="sidebar"><div id="mik-sidebar"></div></aside>
+  <main>
+    <div class="container">
+      <a href="admin.html" class="btn-voltar">&larr; Voltar</a>
+      <h1>Mensagens</h1>
+      <div id="lista"><p>A carregar...</p></div>
+    </div>
+  </main>
+  <script src="SCRIPT/config.js"></script>
+  <script src="SCRIPT/api.js"></script>
+  <script src="SCRIPT/script.js"></script>
+  <script src="SCRIPT/layout.js"></script>
+  <script>
+    MIK_requireAuth(); MIK_renderShell({ subtitulo: 'Mensagens' });
+    function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+    async function load(){
+      var list = await API.mensagens();
+      var el = document.getElementById('lista');
+      if (!list.length) { el.innerHTML = '<p>Sem mensagens.</p>'; return; }
+      el.innerHTML = list.map(function(m){
+        return '<div class="mensagem-card" style="background:var(--cartao,#fff);padding:16px;margin:12px 0;border-radius:10px">'+
+          '<strong>'+esc(m.assunto)+'</strong> — '+esc(m.nome)+
+          '<small style="display:block;color:var(--texto-suave,#666)">'+esc(m.data_envio)+'</small>'+
+          '<p>'+esc(m.texto)+'</p>'+
+          '<button onclick="del('+m.id+')" style="background:#dc3545;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer">Eliminar</button></div>';
+      }).join('');
+    }
+    window.del = async function(id){ if(!confirm('Eliminar?'))return; await API.eliminarMensagem(id); load(); };
+    load().catch(function(e){ document.getElementById('lista').textContent = e.message; });
+  </script>
+</body>
+</html>

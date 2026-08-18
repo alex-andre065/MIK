@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta - MIK</title>
+  <script src="SCRIPT/tema.js"></script>
+  <link rel="stylesheet" href="CSS/style2.css">
+  <link rel="stylesheet" href="CSS/tema.css">
+</head>
+<body>
+  <div class="box">
+    <h2>Criar Conta</h2>
+    <div id="msg" class="msg" style="display:none;margin-bottom:12px;font-weight:bold"></div>
+    <form id="form-cadastro">
+      <input type="text" name="nome" placeholder="Nome completo" required>
+      <input type="email" name="email" placeholder="E-mail" required>
+      <input type="text" name="telefone" placeholder="Telefone">
+      <input type="password" name="password" placeholder="Palavra-passe (mín. 8)" minlength="8" required>
+      <div class="upload-container" style="margin:10px 0">
+        <label style="display:block;margin-bottom:6px">Foto de perfil (opcional)</label>
+        <input type="file" name="foto" accept="image/jpeg,image/png,image/webp">
+      </div>
+      <button type="submit">Registar</button>
+    </form>
+    <p style="margin-top:16px;text-align:center"><a href="login.html">Já tem conta? Entrar</a></p>
+  </div>
+  <script src="SCRIPT/config.js"></script>
+  <script src="SCRIPT/api.js"></script>
+  <script>
+    document.getElementById('form-cadastro').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var msg = document.getElementById('msg');
+      var fd = new FormData(this);
+      try {
+        var data = await API.register(fd);
+        API.setTokens(data.tokens);
+        API.setUser(data.user);
+        msg.style.display = 'block';
+        msg.style.color = '#28a745';
+        msg.textContent = 'Conta criada! A redirecionar...';
+        setTimeout(function () { location.href = 'index.html'; }, 700);
+      } catch (err) {
+        msg.style.display = 'block';
+        msg.style.color = '#dc3545';
+        var d = err.data;
+        msg.textContent = (d && (d.erro || d.detail || (d.email && d.email[0]))) || err.message || 'Erro no registo';
+      }
+    });
+  </script>
+</body>
+</html>

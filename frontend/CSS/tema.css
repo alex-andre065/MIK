@@ -1,0 +1,269 @@
+@import url('moderno.css');
+
+:root{
+    --fundo: #f4f4f9;
+    --fundo-alt: #ffffff;
+    --texto: #1c1e21;
+    --texto-suave: #666666;
+    --cartao: #ffffff;
+    --borda: #e5e5ea;
+    --input-fundo: #ffffff;
+    --input-borda: #dcdcdc;
+    --sombra: rgba(0, 0, 0, 0.08);
+    --header-fundo: #ffffff;
+}
+
+html[data-tema="escuro"]{
+    --fundo: #121212;
+    --fundo-alt: #1a1a1a;
+    --texto: #eaeaea;
+    --texto-suave: #a8a8a8;
+    --cartao: #1e1e1e;
+    --borda: #2e2e2e;
+    --input-fundo: #262626;
+    --input-borda: #3a3a3a;
+    --sombra: rgba(0, 0, 0, 0.4);
+    --header-fundo: #17171a;
+}
+
+body, header, .sidebar, .box, .container, .admin-card, table,
+input, textarea, select, .modal-box, .card-icon, .cards{
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+html[data-tema="escuro"] body{
+    background: var(--fundo);
+    color: var(--texto);
+}
+
+html[data-tema="escuro"] header{
+    background: var(--header-fundo);
+    border-bottom: 1px solid var(--borda);
+}
+
+html[data-tema="escuro"] header .info h5,
+html[data-tema="escuro"] header .info p{
+    color: var(--texto);
+}
+
+html[data-tema="escuro"] .box,
+html[data-tema="escuro"] .adm-box{
+    background: var(--cartao);
+    color: var(--texto);
+    box-shadow: 0 8px 30px var(--sombra);
+}
+
+html[data-tema="escuro"] .box h2,
+html[data-tema="escuro"] .box h3,
+html[data-tema="escuro"] .adm-box h2,
+html[data-tema="escuro"] .adm-box h3{
+    color: var(--texto);
+}
+
+html[data-tema="escuro"] .box p.desc,
+html[data-tema="escuro"] .box .desc{
+    color: var(--texto-suave);
+}
+
+html[data-tema="escuro"] .secao{
+    border-top-color: var(--borda);
+}
+
+html[data-tema="escuro"] main,
+html[data-tema="escuro"] .conteudo-admin,
+html[data-tema="escuro"] .container{
+    background: var(--fundo);
+    color: var(--texto);
+}
+
+html[data-tema="escuro"] .sec-mvp,
+html[data-tema="escuro"] .sec-eventos,
+html[data-tema="escuro"] .sec-galeria,
+html[data-tema="escuro"] .sec-citacao{
+    background: var(--fundo);
+}
+
+html[data-tema="escuro"] .cards,
+html[data-tema="escuro"] .admin-card,
+html[data-tema="escuro"] .evento-card,
+html[data-tema="escuro"] .tabela-box,
+html[data-tema="escuro"] .aviso-tabela{
+    background: var(--cartao);
+    border-color: var(--borda);
+    color: var(--texto);
+    box-shadow: 0 2px 12px var(--sombra);
+}
+
+html[data-tema="escuro"] .cards h3,
+html[data-tema="escuro"] .admin-card h3,
+html[data-tema="escuro"] .evento-card h3{
+    color: var(--texto);
+}
+
+html[data-tema="escuro"] .cards p,
+html[data-tema="escuro"] .admin-card p,
+html[data-tema="escuro"] .evento-card p,
+html[data-tema="escuro"] .sec-vazio{
+    color: var(--texto-suave);
+}
+
+html[data-tema="escuro"] h1,
+html[data-tema="escuro"] h2,
+html[data-tema="escuro"] h3,
+html[data-tema="escuro"] h4{
+    color: var(--texto);
+}
+
+html[data-tema="escuro"] .boas-vindas,
+html[data-tema="escuro"] p{
+    color: var(--texto);
+}
+
+html[data-tema="escuro"] table{
+    background: var(--cartao);
+    color: var(--texto);
+}
+
+html[data-tema="escuro"] th{
+    background: var(--fundo-alt);
+    color: var(--texto);
+    border-color: var(--borda);
+}
+
+html[data-tema="escuro"] td{
+    border-color: var(--borda);
+    color: var(--texto);
+}
+
+html[data-tema="escuro"] tr:hover td{
+    background: rgba(255,255,255,0.03);
+}
+
+html[data-tema="escuro"] .meta{
+    color: var(--texto-suave);
+}
+
+html[data-tema="escuro"] input,
+html[data-tema="escuro"] textarea,
+html[data-tema="escuro"] select{
+    background: var(--input-fundo);
+    color: var(--texto);
+    border: 1px solid var(--input-borda);
+}
+
+html[data-tema="escuro"] input::placeholder,
+html[data-tema="escuro"] textarea::placeholder{
+    color: var(--texto-suave);
+}
+
+html[data-tema="escuro"] label{
+    color: var(--texto);
+}
+
+html[data-tema="escuro"] .modal-box{
+    background: var(--cartao);
+    color: var(--texto);
+    box-shadow: 0 10px 40px var(--sombra);
+}
+
+html[data-tema="escuro"] .modal-box h3,
+html[data-tema="escuro"] .modal-box p{
+    color: var(--texto);
+}
+
+html[data-tema="escuro"] .btn-cancelar{
+    background: var(--input-fundo);
+    color: var(--texto) !important;
+    border: 1px solid var(--input-borda);
+}
+
+html[data-tema="escuro"] footer,
+html[data-tema="escuro"] .rodape-direitos{
+    background: var(--header-fundo);
+    color: var(--texto-suave);
+    border-top: 1px solid var(--borda);
+}
+
+html[data-tema="escuro"] .voltar,
+html[data-tema="escuro"] .btn-voltar,
+html[data-tema="escuro"] .link-admin,
+html[data-tema="escuro"] .paginacao a,
+html[data-tema="escuro"] .paginacao span{
+    background: rgba(0,123,255,0.15);
+}
+
+html[data-tema="escuro"] a[href="eliminar_conta.php"]{
+    background: rgba(220,53,69,0.15);
+}
+
+html[data-tema="escuro"] .contacto-info-box,
+html[data-tema="escuro"] .contacto-form-box{
+    background: var(--cartao);
+    box-shadow: 0 2px 12px var(--sombra);
+}
+
+html[data-tema="escuro"] .contacto-grid h2{
+    color: var(--texto);
+    border-bottom-color: var(--borda);
+}
+
+html[data-tema="escuro"] .contacto-info-box p{
+    color: var(--texto-suave);
+}
+
+html[data-tema="escuro"] .contacto-form-box input,
+html[data-tema="escuro"] .contacto-form-box textarea{
+    background: var(--input-fundo);
+    color: var(--texto);
+    border-color: var(--input-borda);
+}
+
+html[data-tema="escuro"] .link-email-directo,
+html[data-tema="escuro"] .link-tel-directo{
+    background: rgba(0,123,255,0.15);
+}
+
+
+html[data-tema="escuro"] .tabela-box,
+html[data-tema="escuro"] .form-box,
+html[data-tema="escuro"] .info-box,
+html[data-tema="escuro"] .sobre-box,
+html[data-tema="escuro"] .evento-item,
+html[data-tema="escuro"] .galeria-item,
+html[data-tema="escuro"] .mensagem-card,
+html[data-tema="escuro"] .card-evento,
+html[data-tema="escuro"] .card-foto,
+html[data-tema="escuro"] .filtro-box,
+html[data-tema="escuro"] .aviso-box,
+html[data-tema="escuro"] .painel-box,
+html[data-tema="escuro"] .lista-box,
+html[data-tema="escuro"] .sec-sobre,
+html[data-tema="escuro"] .conteudo-sobre,
+html[data-tema="escuro"] .conteudo-eventos,
+html[data-tema="escuro"] .conteudo-galeria,
+html[data-tema="escuro"] .conteudo-admin .box,
+html[data-tema="escuro"] .gerir-box,
+html[data-tema="escuro"] .ver-mensagens-box{
+    background: var(--cartao);
+    color: var(--texto);
+    box-shadow: 0 2px 12px var(--sombra);
+}
+
+html[data-tema="escuro"] .conteudo-sobre h1,
+html[data-tema="escuro"] .conteudo-eventos h1,
+html[data-tema="escuro"] .conteudo-galeria h1,
+html[data-tema="escuro"] .conteudo-contacto h1,
+html[data-tema="escuro"] .container h1{
+    color: var(--texto);
+    border-bottom-color: var(--borda);
+}
+
+html[data-tema="escuro"] .badge-user{
+    background: rgba(108,117,125,0.25);
+    color: #cfd3d7;
+}
+
+html[data-tema="escuro"] .badge-admin{
+    background: rgba(0,123,255,0.2);
+    color: #8ec8ff;
+}

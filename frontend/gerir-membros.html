@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerir Membros - MIK</title>
+  <script src="SCRIPT/tema.js"></script>
+  <link rel="stylesheet" href="CSS/style.css">
+  <link rel="stylesheet" href="CSS/tema.css">
+  <link rel="stylesheet" href="CSS/gerir_membros.css">
+  <link rel="stylesheet" href="CSS/moderno.css">
+</head>
+<body>
+  <header id="mik-header"></header>
+  <div id="sidebar-overlay" onclick="fecharSidebar()"></div>
+  <aside class="sidebar" id="sidebar"><div id="mik-sidebar"></div></aside>
+  <main>
+    <div class="container">
+      <a href="admin.html" class="btn-voltar">&larr; Voltar ao Painel</a>
+      <h1>Gerir Membros</h1>
+      <div class="tabela-box">
+        <table>
+          <thead><tr><th>Foto</th><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Nível</th><th>Ações</th></tr></thead>
+          <tbody id="tbody"><tr><td colspan="6">A carregar...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div id="modal-nivel" class="modal-container" style="display:none">
+    <div class="modal-box" style="max-width:400px;padding:28px 24px;border-radius:16px">
+      <h3>Confirmar alteração</h3>
+      <p id="texto-nivel"></p>
+      <input type="password" id="senha-conf" placeholder="Palavra-passe ou senha de segurança" style="width:100%;box-sizing:border-box;padding:12px;border-radius:10px;margin:12px 0">
+      <div id="fb" style="min-height:20px;margin-bottom:12px;font-size:13px;font-weight:600"></div>
+      <div class="modal-botoes">
+        <button type="button" class="btn-cancelar" onclick="document.getElementById('modal-nivel').style.display='none'">Cancelar</button>
+        <button type="button" class="btn-confirmar" id="btn-ok">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="SCRIPT/config.js"></script>
+  <script src="SCRIPT/api.js"></script>
+  <script src="SCRIPT/script.js"></script>
+  <script src="SCRIPT/layout.js"></script>
+  <script src="SCRIPT/bloqueio.js"></script>
+  <script>
+    MIK_requireAuth();
+    MIK_renderShell({ subtitulo: 'Gerir Membros' });
+    var pending = null;
+    function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+
+    async function load() {
+      var list = await API.membros();
+      var me = API.user;
+      document.getElementById('tbody').innerHTML = list.map(function(m){
+        var acao = (m.id === me.id)
+          ? '<span style="color:#777;font-size:13px;font-style:italic">Você</span>'
+          : '<a href="#" style="color:'+(m.nivel==='admin'?'#dc3545':'#28a745')+'" onclick="abrir('+m.id+',\''+(m.nivel==='admin'?'user':'admin')+'\',\''+esc(m.nome).replace(/'/g,"\\'")+'\');return false;">'+(m.nivel==='admin'?'Despromover':'Tornar Admin')+'</a>';
+        return '<tr><td>'+(m.foto_url?'<img src="'+m.foto_url+'" class="avatar-tabela" alt="">':'')+'</td>'+
+          '<td><strong>'+esc(m.nome)+'</strong></td><td>'+esc(m.email)+'</td><td>'+esc(m.telefone)+'</td>'+
+          '<td><span class="badge '+(m.nivel==='admin'?'badge-admin':'badge-user')+'">'+esc(m.nivel).toUpperCase()+'</span></td><td>'+acao+'</td></tr>';
+      }).join('');
+    }
+
+    window.abrir = function(id, nivel, nome) {
+      pending = { id: id, mudar_nivel: nivel };
+      document.getElementById('texto-nivel').textContent = (nivel==='admin'?'Promover ':'Despromover ') + nome + '. Confirme com a sua senha.';
+      document.getElementById('senha-conf').value = '';
+      document.getElementById('fb').textContent = '';
+      document.getElementById('modal-nivel').style.display = 'flex';
+    };
+
+    document.getElementById('btn-ok').onclick = async function() {
+      var fb = document.getElementById('fb');
+      try {
+        var data = await API.mudarNivel({ id: pending.id, mudar_nivel: pending.mudar_nivel, senha_confirmacao: document.getElementById('senha-conf').value });
+        fb.style.color = '#28a745'; fb.textContent = data.mensagem || 'OK';
+        setTimeout(function(){ document.getElementById('modal-nivel').style.display='none'; load(); }, 800);
+      } catch (err) {
+        fb.style.color = '#dc3545';
+        if (err.data && err.data.bloqueio) {
+          fb.id = 'contador-bloqueio-modal';
+          iniciarContadorBloqueio('contador-bloqueio-modal', err.data.bloqueio.restante, err.data.bloqueio.permanente, ['#btn-ok']);
+        } else {
+          fb.textContent = (err.data && err.data.erro) || err.message;
+        }
+      }
+    };
+    load().catch(function(e){ document.getElementById('tbody').innerHTML = '<tr><td colspan="6">Erro: '+(e.message||'')+'</td></tr>'; });
+  </script>
+</body>
+</html>

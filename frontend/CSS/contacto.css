@@ -1,0 +1,103 @@
+.conteudo-contacto{
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.conteudo-contacto h1{
+    color: #222;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.contacto-grid{
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 30px;
+}
+
+.contacto-info-box, .contacto-form-box{
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.contacto-grid h2{
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.contacto-info-box p{
+    color: #555;
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+
+.link-email-directo, .link-tel-directo{
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.contacto-form-box input, .contacto-form-box textarea{
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.contacto-form-box input:focus, .contacto-form-box textarea:focus{
+    border-color: #007bff;
+    outline: none;
+}
+
+.contacto-form-box button{
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.2s;
+}
+
+.contacto-form-box button:hover{
+    background: #0056b3;
+}
+
+.alerta-sucesso{
+    margin-top: 15px;
+    padding: 10px;
+    background: #e2f0d9;
+    color: #385723;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+@media (max-width: 768px){
+    .contacto-grid{
+        grid-template-columns: 1fr;
+    }
+    .conteudo-contacto{
+        margin: 20px 10px;
+        padding: 0;
+    }
+}

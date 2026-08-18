@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <script src="SCRIPT/tema.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/moderno.css">
+    <title>MIK - Ministério Internacional Kodesh</title>
+    <link rel="stylesheet" href="CSS/tema.css">
+    
+</head>
+<body>
+    <header id="mik-header"></header>
+    <div id="sidebar-overlay" onclick="fecharSidebar()"></div>
+    <aside class="sidebar" id="sidebar"><div id="mik-sidebar"></div></aside>
+    <main class="home">
+
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <p class="hero-tag">Missão Internacional Kodesh</p>
+                <h1>Somos Apostólicos,<br>Somos Proféticos,<br>Somos MIK</h1>
+                <p class="hero-texto">Uma família ligada pelo propósito de estar com Deus e buscar mais almas para Ele.</p>
+                <div class="hero-botoes">
+                    <a href="eventos.html" class="btn-hero btn-hero-primario">Ver Eventos</a>
+                    <a href="galeria.html" class="btn-hero btn-hero-secundario">Galeria</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec-mvp">
+            <div class="sec-inner">
+                <div class="cards-container">
+                    <div class="cards">
+                        <div class="card-icon">🎯</div>
+                        <h3>Missão</h3>
+                        <p>Anunciar o Evangelho com autoridade, curar corações partidos e ativar o chamado espiritual de cada indivíduo.</p>
+                    </div>
+                    <div class="cards">
+                        <div class="card-icon">👁️</div>
+                        <h3>Visão</h3>
+                        <p>Ser um farol de orientação profética e apostólica que cruza fronteiras e estabelece o Reino de Deus nas nações.</p>
+                    </div>
+                    <div class="cards">
+                        <div class="card-icon">💎</div>
+                        <h3>Valores</h3>
+                        <p>Santidade (Kodesh), excelência ministerial, amor fraternal, fidelidade à Palavra e integridade de caráter.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec-eventos">
+            <div class="sec-inner">
+                <div class="sec-cabecalho">
+                    <h2>📅 Próximos Eventos</h2>
+                    <a href="eventos.html" class="link-ver-tudo">Ver todos →</a>
+                </div>
+                <div id="home-eventos"></div>
+            </div>
+        </section>
+
+        <section class="sec-galeria">
+            <div class="sec-inner">
+                <div class="sec-cabecalho">
+                    <h2>📷 Galeria</h2>
+                    <a href="galeria.html" class="link-ver-tudo">Ver galeria →</a>
+                </div>
+                <div id="home-fotos"></div>
+            </div>
+        </section>
+
+        <section class="sec-citacao">
+            <blockquote>
+                <p>“Ide por todo o mundo e pregai o evangelho a toda a criatura.”</p>
+                <cite>— Marcos 16:15</cite>
+            </blockquote>
+        </section>
+
+        <section class="sec-cta">
+            <div class="sec-inner cta-box">
+                <h2>Faz parte desta família</h2>
+                <p>Tens dúvidas, testemunhos ou queres caminhar connosco? Envia-nos uma mensagem.</p>
+                <a href="contacto.html" class="btn-hero btn-hero-primario">📞 Contactar a MIK</a>
+            </div>
+        </section>
+    </main>
+    <footer class="rodape-direitos"><p>&copy; 2026 Missão Internacional Kodesh (MIK). Todos os direitos reservados.</p></footer>
+    <script src="SCRIPT/config.js"></script>
+    <script src="SCRIPT/api.js"></script>
+    <script src="SCRIPT/script.js"></script>
+    <script src="SCRIPT/layout.js"></script>
+    <script>
+MIK_requireAuth(); MIK_renderShell({pagina:'inicio'});
+function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+API.home().then(function(d){
+ var ev=document.getElementById('home-eventos'), ft=document.getElementById('home-fotos');
+ if(!d.eventos||!d.eventos.length){ev.innerHTML='<p class="sec-vazio">Ainda não há eventos publicados. Fica atento!</p>';}else{ev.innerHTML='<div class="eventos-grid">'+d.eventos.map(function(e){return '<article class="evento-card"><span class="evento-data">'+esc(e.data_atividade)+'</span><h3>'+esc(e.titulo)+'</h3><p>'+esc(e.descricao||'').slice(0,140)+'</p></article>';}).join('')+'</div>';}
+ if(!d.fotos||!d.fotos.length){ft.innerHTML='<p class="sec-vazio">Ainda não há fotos na galeria.</p>';}else{ft.innerHTML='<div class="galeria-grid-home">'+d.fotos.map(function(f){return '<a href="galeria.html" class="galeria-item-home" title="'+esc(f.legenda)+'"><img src="'+(f.imagem_url||'')+'" alt="'+esc(f.legenda)+'" loading="lazy"><span class="galeria-legenda">'+esc(f.legenda)+'</span></a>';}).join('')+'</div>';}
+}).catch(function(e){console.error(e);});
+</script>
+    <script src="SCRIPT/loader.js"></script>
+</body>
+</html>

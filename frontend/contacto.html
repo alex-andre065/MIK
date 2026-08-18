@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <script src="SCRIPT/tema.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/contacto.css">
+    <title>Contacto - MIK</title>
+    <link rel="stylesheet" href="CSS/tema.css">
+    
+</head>
+<body>
+    <header id="mik-header"></header>
+    <div id="sidebar-overlay" onclick="fecharSidebar()"></div>
+    <aside class="sidebar" id="sidebar"><div id="mik-sidebar"></div></aside>
+    <main class="conteudo-contacto">
+        <h1>Contacto</h1>
+
+        <div class="contacto-grid">
+            <div class="contacto-info-box">
+                <h2>Canais Oficiais</h2>
+                <p><strong>Facebook:</strong> <a href="https://facebook.com/profile.html?id=61591661825426" target="_blank" rel="noopener noreferrer" class="link-email-directo">Missão Internacional Kodesh</a></p>
+                <p><strong>Telefone:</strong>
+                    <a href="tel:+244943692754" class="link-tel-directo">+244 943 692 754</a> /
+                    <a href="tel:+244943592920" class="link-tel-directo">+244 943 592 920</a>
+                </p>
+                <p><strong>Não hesite em fazer parte desta família.</strong></p>
+            </div>
+
+            <div class="contacto-form-box">
+                <h2>Envia uma Mensagem</h2>
+                <form id="contacto-form">
+                    <input type="text" id="nome_contacto" name="nome_contacto" placeholder="Teu Nome" required>
+                    <input type="text" id="assunto_contacto" name="assunto_contacto" placeholder="Assunto" required>
+                    <textarea id="mensagem_contacto" name="mensagem_contacto" placeholder="Escreve aqui a tua mensagem..." rows="5" required></textarea>
+                    <button type="submit">Enviar Mensagem</button>
+                </form>
+                <div id="contacto-feedback"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="rodape-direitos"><p>&copy; 2026 Missão Internacional Kodesh (MIK). Todos os direitos reservados.</p></footer>
+    <script src="SCRIPT/config.js"></script>
+    <script src="SCRIPT/api.js"></script>
+    <script src="SCRIPT/script.js"></script>
+    <script src="SCRIPT/layout.js"></script>
+    <script>
+MIK_requireAuth(); MIK_renderShell({pagina:'contacto'});
+document.getElementById('contacto-form').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var fb=document.getElementById('contacto-feedback');
+  try{
+    await API.contacto({nome:document.getElementById('nome_contacto').value.trim(),assunto:document.getElementById('assunto_contacto').value.trim(),texto:document.getElementById('mensagem_contacto').value.trim()});
+    fb.className='alerta-sucesso'; fb.textContent='Mensagem enviada com sucesso.'; this.reset();
+  }catch(err){ fb.style.color='#dc3545'; fb.textContent=(err.data&&err.data.erro)||err.message; }
+});
+</script>
+    <script src="SCRIPT/loader.js"></script>
+</body>
+</html>

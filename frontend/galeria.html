@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <script src="SCRIPT/tema.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/galeria.css?v=6">
+    <title>MIK - Ministério Internacional Kodesh</title>
+    <link rel="stylesheet" href="CSS/tema.css">
+    
+</head>
+<body>
+    <header id="mik-header"></header>
+    <div id="sidebar-overlay" onclick="fecharSidebar()"></div>
+    <aside class="sidebar" id="sidebar"><div id="mik-sidebar"></div></aside>
+    <main class="conteudo-galeria">
+        <h1 style="text-align:center;margin-bottom:30px;">Galeria de Fotos</h1>
+        <div class="galeria-grid" id="lista-galeria"></div>
+    </main>
+    <div id="lightbox-modal" class="lightbox-overlay" onclick="fecharLightbox()">
+      <span class="lightbox-fechar">&times;</span><div id="lightbox-container-conteudo"></div>
+    </div>
+    <footer class="rodape-direitos"><p>&copy; 2026 Missão Internacional Kodesh (MIK). Todos os direitos reservados.</p></footer>
+    <script src="SCRIPT/config.js"></script>
+    <script src="SCRIPT/api.js"></script>
+    <script src="SCRIPT/script.js"></script>
+    <script src="SCRIPT/layout.js"></script>
+    <script>
+MIK_requireAuth(); MIK_renderShell({pagina:'galeria'});
+function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+function ampliarImagemEmoji(emoji){var c=document.getElementById('lightbox-container-conteudo');c.innerHTML='<div class="lightbox-emoji-expandido">'+emoji+'</div>';document.getElementById('lightbox-modal').style.display='flex';}
+function ampliarImagemReal(src){var m=document.getElementById('lightbox-modal'),c=document.getElementById('lightbox-container-conteudo');c.innerHTML='<div class="lightbox-loader"><div class="spinner"></div><p>A carregar...</p></div>';m.style.display='flex';var i=new Image();i.className='lightbox-img-expandida';i.onload=function(){c.innerHTML='';c.appendChild(i);requestAnimationFrame(function(){i.classList.add('lightbox-img-visivel');});};i.onerror=function(){c.innerHTML='<div class="lightbox-loader"><p>Não foi possível carregar a imagem.</p></div>';};i.src=src;}
+API.galeria().then(function(lista){
+ var el=document.getElementById('lista-galeria');
+ if(!lista.length){
+   el.innerHTML = [
+     ['🖼️','Encontro Oficial'],
+     ['✨','Liderança e Visão'],
+     ['🙌','Momentos Apostólicos']
+   ].map(function(x){
+     return '<div class="galeria-card"><div class="img-wrapper placeholder-click" data-emoji="'+x[0]+'"><div class="imagem-placeholder-box">'+x[0]+'</div></div><div class="galeria-info">'+x[1]+'</div><a href="#" class="btn-download-img" onclick="event.preventDefault();alert(\'Funcionalidade indisponível no modo padrão sem imagens carregadas.\')">Fluxo de Teste</a></div>';
+   }).join('');
+   el.querySelectorAll('.placeholder-click').forEach(function(node){node.addEventListener('click',function(){ampliarImagemEmoji(node.dataset.emoji);});});
+   return;
+ }
+ el.innerHTML=lista.map(function(f){var src=f.imagem_url||'';return '<div class="galeria-card"><div class="img-wrapper" onclick="ampliarImagemReal(\''+src.replace(/'/g,"\\'")+'\')"><img src="'+src+'" alt="'+esc(f.legenda)+'"></div><div class="galeria-info">'+esc(f.legenda)+'</div><a href="'+src+'" download class="btn-download-img">📥 Descarregar</a></div>';}).join('');
+});
+function fecharLightbox(){document.getElementById('lightbox-modal').style.display='none';document.getElementById('lightbox-container-conteudo').innerHTML='';}
+
+</script>
+    <script src="SCRIPT/loader.js"></script>
+</body>
+</html>

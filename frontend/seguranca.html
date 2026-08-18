@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senha de Segurança - MIK</title>
+  <script src="SCRIPT/tema.js"></script>
+  <link rel="stylesheet" href="CSS/style2.css"><link rel="stylesheet" href="CSS/tema.css">
+</head>
+<body>
+<div class="box">
+  <h2>Senha de Segurança</h2>
+  <p>Cria uma senha adicional para confirmar ações sensíveis.</p>
+  <form id="form">
+    <input type="password" name="senha_atual" placeholder="Palavra-passe atual" required>
+    <input type="password" name="senha_seguranca" placeholder="Nova senha de segurança" minlength="8" required>
+    <input type="password" name="confirmacao" placeholder="Confirmar" minlength="8" required>
+    <button type="submit">Guardar</button>
+  </form>
+  <div id="msg" class="msg" style="display:none;margin-top:12px;font-weight:bold"></div>
+  <p style="margin-top:16px"><a href="admin.html">Voltar ao painel</a></p>
+</div>
+<script src="SCRIPT/config.js"></script><script src="SCRIPT/api.js"></script><script src="SCRIPT/bloqueio.js"></script>
+<script>
+if (!API.token) location.href='login.html';
+document.getElementById('form').onsubmit = async function(e){
+  e.preventDefault();
+  var fd = new FormData(this);
+  var msg = document.getElementById('msg');
+  try {
+    var r = await API.senhaSeguranca({ senha_atual: fd.get('senha_atual'), senha_seguranca: fd.get('senha_seguranca'), confirmacao: fd.get('confirmacao') });
+    msg.style.display='block'; msg.style.color='#28a745'; msg.textContent=r.mensagem||'Guardado.';
+    this.reset();
+  } catch(err) {
+    msg.style.display='block'; msg.style.color='#dc3545';
+    if (err.data && err.data.bloqueio) {
+      msg.id='contador-bloqueio';
+      iniciarContadorBloqueio('contador-bloqueio', err.data.bloqueio.restante, err.data.bloqueio.permanente, ['button']);
+    } else msg.textContent = (err.data&&err.data.erro)||err.message;
+  }
+};
+</script>
+</body></html>

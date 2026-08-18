@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="SCRIPT/tema.js"></script>
+<link rel="stylesheet" href="CSS/style.css"><link rel="stylesheet" href="CSS/tema.css"><link rel="stylesheet" href="CSS/definicoes.css">
+<title>Definições de Conta - MIK</title>
+</head>
+<body class="definicoes-page">
+<div class="definicoes-box">
+  <div class="topo-definicoes"><a id="voltar-def" href="index.html" title="Voltar">←</a><h2>Definições de Conta</h2></div>
+  <div class="perfil-cartao"><img id="perfil-foto" src="img/padrao.jpg" alt="Foto de perfil"><div><strong id="perfil-nome">Utilizador</strong><span id="perfil-email"></span></div></div>
+  <div id="msg" style="display:none"></div>
+
+  <div class="lista-config">
+    <div class="config-item" id="item-dados">
+      <button type="button" class="config-linha" onclick="alternarConfig('item-dados')"><span class="config-icone">👤</span><span class="config-texto"><strong>Dados pessoais</strong><small>Nome, e-mail e telefone</small></span><span class="config-seta">›</span></button>
+      <div class="config-painel"><form id="form-dados"><input id="f-nome" type="text" placeholder="Nome" required><input id="f-email" type="email" placeholder="E-mail" required><input id="f-telefone" type="tel" placeholder="Telefone"><button type="submit">Guardar Dados</button></form></div>
+    </div>
+    <div class="config-item" id="item-foto">
+      <button type="button" class="config-linha" onclick="alternarConfig('item-foto')"><span class="config-icone">🖼️</span><span class="config-texto"><strong>Foto de perfil</strong><small>Alterar a tua foto</small></span><span class="config-seta">›</span></button>
+      <div class="config-painel"><div class="foto-atual"><img id="preview-foto" src="img/padrao.jpg" alt="Foto atual"><span style="font-size:13px;color:var(--texto-suave)">Foto atual</span></div><form id="form-foto"><input type="file" name="foto" accept="image/jpeg,image/png" required><button type="submit">Atualizar Foto</button></form></div>
+    </div>
+    <div class="config-item" id="item-senha">
+      <button type="button" class="config-linha" onclick="alternarConfig('item-senha')"><span class="config-icone">🔒</span><span class="config-texto"><strong>Alterar palavra-passe</strong><small>Mínimo de 8 caracteres</small></span><span class="config-seta">›</span></button>
+      <div class="config-painel"><form id="form-senha"><input type="password" name="senha_atual" placeholder="Palavra-passe atual" required><input type="password" name="nova_senha" placeholder="Nova palavra-passe" minlength="8" required><input type="password" name="confirmacao" placeholder="Confirmar nova palavra-passe" minlength="8" required><button type="submit">Alterar Senha</button></form></div>
+    </div>
+    <button type="button" class="config-linha config-linha-switch" onclick="alternarTema()"><span class="config-icone toggle-tema-icone">🌙</span><span class="config-texto"><strong class="toggle-tema-texto">Modo escuro</strong><small>Ativa o tema escuro do site</small></span><span class="menu-conta-switch"></span></button>
+    <a id="link-seguranca" href="seguranca.html" class="config-linha" style="display:none"><span class="config-icone">🔐</span><span class="config-texto"><strong>Segurança avançada</strong><small>Gerir a senha de segurança</small></span><span class="config-seta">›</span></a>
+  </div>
+
+  <div class="lista-config">
+    <a href="#" class="config-linha config-perigo" onclick="abrirModal(event)"><span class="config-icone">🚪</span><span class="config-texto"><strong>Terminar sessão</strong><small>Sair da tua conta neste dispositivo</small></span></a>
+    <a href="eliminar-conta.html" class="config-linha config-perigo"><span class="config-icone">🗑️</span><span class="config-texto"><strong>Eliminar conta</strong><small>Ação permanente e irreversível</small></span></a>
+  </div>
+</div>
+
+<div id="modal-sair" class="modal-container"><div class="modal-box"><h3>Terminar Sessão</h3><p>Tens a certeza de que queres sair do site?</p><div class="modal-botoes"><button class="btn-cancelar" onclick="fecharModal()">Cancelar</button><button class="btn-confirmar" onclick="MIK_sair()">Sim, Sair</button></div></div></div>
+
+<script src="SCRIPT/config.js"></script><script src="SCRIPT/api.js"></script><script src="SCRIPT/script.js"></script><script src="SCRIPT/layout.js"></script>
+<script>
+function alternarConfig(id){
+  document.querySelectorAll('.config-item').forEach(function(el){ if(el.id!==id) el.classList.remove('aberto'); });
+  var el=document.getElementById(id); if(el) el.classList.toggle('aberto');
+}
+function msg(t,ok){var m=document.getElementById('msg');m.className=ok?'msg-ok':'msg-erro';m.textContent=t;m.style.display='block';}
+(function(){
+  if(!MIK_requireAuth()) return;
+  var u=(window.API&&API.user)||JSON.parse(localStorage.getItem('mik_user')||'{}');
+  MIK_renderShell({subtitulo:'Definições'});
+  if(u.nivel==='admin'||u.is_admin) document.getElementById('link-seguranca').style.display='flex';
+  document.getElementById('perfil-nome').textContent=u.nome||'Utilizador';
+  document.getElementById('perfil-email').textContent=u.email||'';
+  document.getElementById('f-nome').value=u.nome||'';document.getElementById('f-email').value=u.email||'';document.getElementById('f-telefone').value=u.telefone||'';
+  if(u.foto_url){document.getElementById('perfil-foto').src=u.foto_url;document.getElementById('preview-foto').src=u.foto_url;}
+  if(u.nivel==='admin'||u.is_admin) document.getElementById('voltar-def').href='admin.html';
+  if(window.API&&API.me) API.me().then(function(me){API.setUser(me);if(me.foto_url){document.getElementById('perfil-foto').src=me.foto_url;document.getElementById('preview-foto').src=me.foto_url;}}).catch(function(){});
+  document.getElementById('form-dados').onsubmit=async function(e){e.preventDefault();try{var me=await API.updateMe({nome:document.getElementById('f-nome').value,email:document.getElementById('f-email').value,telefone:document.getElementById('f-telefone').value});API.setUser(me);document.getElementById('perfil-nome').textContent=me.nome||'';document.getElementById('perfil-email').textContent=me.email||'';msg('Dados atualizados com sucesso.',true);}catch(err){msg(err.message||'Não foi possível atualizar os dados.',false);}};
+  document.getElementById('form-senha').onsubmit=async function(e){e.preventDefault();var fd=new FormData(this);try{var r=await API.changePassword({senha_atual:fd.get('senha_atual'),nova_senha:fd.get('nova_senha'),confirmacao:fd.get('confirmacao')});msg(r.mensagem||'Senha alterada com sucesso.',true);this.reset();}catch(err){msg((err.data&&err.data.erro)||err.message||'Não foi possível alterar a senha.',false);}};
+  document.getElementById('form-foto').onsubmit=async function(e){e.preventDefault();try{var me=await API.updateMe(new FormData(this));API.setUser(me);if(me.foto_url){document.getElementById('perfil-foto').src=me.foto_url;document.getElementById('preview-foto').src=me.foto_url;}msg('Foto atualizada com sucesso.',true);}catch(err){msg(err.message||'Não foi possível atualizar a foto.',false);}};
+})();
+</script>
+</body>
+</html>

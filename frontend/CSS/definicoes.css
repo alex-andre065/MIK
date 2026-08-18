@@ -1,0 +1,21 @@
+body.definicoes-page{align-items:flex-start;padding-top:32px;padding-bottom:40px;background:var(--fundo);}
+.definicoes-box{max-width:480px;width:100%;margin:0 auto;text-align:left;padding:0;background:transparent;box-shadow:none;}
+.topo-definicoes{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.topo-definicoes a{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:var(--cartao);color:var(--texto)!important;font-size:18px;text-decoration:none!important;flex-shrink:0;box-shadow:0 2px 8px var(--sombra);}
+.topo-definicoes a:hover{background:#007bff;color:#fff!important;}
+.topo-definicoes h2{margin:0;font-size:21px;color:var(--texto);}
+.perfil-cartao{display:flex;align-items:center;gap:14px;background:var(--cartao);border-radius:16px;padding:18px;box-shadow:0 2px 10px var(--sombra);margin-bottom:18px;}
+.perfil-cartao img{width:58px;height:58px;border-radius:50%;object-fit:cover;border:2px solid #007bff;flex-shrink:0;}
+.perfil-cartao strong{display:block;font-size:16px;color:var(--texto);}
+.perfil-cartao span{display:block;font-size:13px;color:var(--texto-suave);margin-top:2px;}
+.msg-ok,.msg-erro{border-radius:10px;padding:12px 14px;font-weight:600;margin-bottom:14px;font-size:14px;}
+.msg-ok{color:#1e7e34;background:rgba(40,167,69,.12);}.msg-erro{color:#c0273c;background:rgba(220,53,69,.1);}
+.lista-config{background:var(--cartao);border-radius:16px;overflow:hidden;box-shadow:0 2px 10px var(--sombra);margin-bottom:16px;}
+.lista-config>*+*{border-top:1px solid var(--borda);}
+.config-linha{display:flex;align-items:center;gap:14px;width:100%;padding:15px 16px;margin:0;background:none;border:none;text-align:left;cursor:pointer;user-select:none;font-family:inherit;font-weight:400;color:var(--texto);text-decoration:none;}
+.config-linha:hover{background:rgba(0,123,255,.05);transform:none!important;}
+.config-icone{font-size:19px;width:22px;text-align:center;flex-shrink:0}.config-texto{flex:1;min-width:0}.config-texto strong{display:block;font-size:14.5px;color:var(--texto);font-weight:600}.config-texto small{display:block;font-size:12.5px;color:var(--texto-suave);margin-top:1px}.config-seta{font-size:18px;color:var(--texto-suave);flex-shrink:0;transition:transform .25s ease}.config-item.aberto .config-seta{transform:rotate(90deg)}
+.config-perigo .config-texto strong,.config-perigo .config-icone{color:#dc3545}.config-painel{max-height:0;overflow:hidden;opacity:0;transition:max-height .3s ease,opacity .25s ease;padding:0 16px}.config-item.aberto .config-painel{max-height:600px;opacity:1;padding:0 16px 18px}.config-painel form{margin:0}.config-painel input{margin-top:8px}.config-painel input:first-of-type{margin-top:0}.config-painel button{width:100%;margin-top:12px}.foto-atual{display:flex;align-items:center;gap:15px;margin-bottom:10px}.foto-atual img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--borda)}
+.config-linha-switch{justify-content:space-between;cursor:pointer}.config-linha-switch .menu-conta-switch{width:40px;height:22px;border-radius:20px;background:var(--input-borda);position:relative;flex-shrink:0;transition:background .2s}.config-linha-switch .menu-conta-switch:after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}.config-linha-switch .menu-conta-switch.ativo{background:#28a745}.config-linha-switch .menu-conta-switch.ativo:after{transform:translateX(18px)}
+.definicoes-box .modal-container{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px}.definicoes-box .modal-box{background:var(--cartao);color:var(--texto);border-radius:14px;padding:24px;max-width:360px;width:100%;text-align:center;box-shadow:0 10px 40px var(--sombra)}
+@media(max-width:600px){body.definicoes-page{padding:22px 14px 35px}.definicoes-box{max-width:100%}.topo-definicoes h2{font-size:19px}.perfil-cartao{padding:15px}.config-linha{padding:14px}.config-painel{padding-left:14px;padding-right:14px}.config-item.aberto .config-painel{padding-left:14px;padding-right:14px}}
